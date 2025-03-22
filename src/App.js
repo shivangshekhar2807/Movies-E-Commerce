@@ -6,6 +6,7 @@ import AvailableMovies from './components/Movies/AvailableMovies';
 import FooterLogo from './components/Footer/FooterLogo';
 import CartItem from './components/Cart/CartItem';
 import { useState } from 'react';
+import WrapperApp from './components/Store/WrapperApp';
 
 
 function App() {
@@ -20,13 +21,13 @@ function App() {
     setShowCart(false);
   }
 
-  return <>
+  return <WrapperApp>
     {showCart && <CartItem dontShowCartHandler={dontShowCartHandler}></CartItem>}
      <Header showCartHandler={showCartHandler}></Header>
     <AvailableMovies></AvailableMovies>
     <FooterLogo></FooterLogo>
     
-  </>
+  </WrapperApp>
   
 
 }

@@ -4,6 +4,8 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import CartModal from "./CartModal";
 import CartTotal from "./CartTotal";
 import Button from 'react-bootstrap/Button';
+import { useContext } from "react";
+import AllContext from "../Store/Store-Context";
 const cartElements = [
 
 {
@@ -47,6 +49,7 @@ quantity: 1,
 
 function CartItem({ dontShowCartHandler }) {
     
+    const CartContext = useContext(AllContext);
        
 
     return (
@@ -65,13 +68,13 @@ function CartItem({ dontShowCartHandler }) {
         </div>
       </div>
       <ul className="list-group">
-        {cartElements.map((singlecartitem, index) => {
+        {CartContext.showCartItem.map((singlecartitem, index) => {
           return (
             <SingleCart key={index} singlecartitem={singlecartitem}></SingleCart>
           )
         })}
                 
-             <CartTotal cartElements={cartElements}></CartTotal>   
+             <CartTotal showCartItem={CartContext.showCartItem}></CartTotal>   
             </ul>
             <Button variant="success">Purchase</Button>
     </CartModal>
