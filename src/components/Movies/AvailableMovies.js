@@ -58,8 +58,8 @@ function AvailableMovies() {
       ))}
             </Row>
             <div className="d-flex justify-content-center mt-4 mb-4">
-  <SeeTheCart />
-</div>
+          <SeeTheCart />
+            </div>
             </>
   );
     

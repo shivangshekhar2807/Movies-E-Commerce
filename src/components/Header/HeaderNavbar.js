@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import HeaderCart from './HeaderCart';
 
-function HeaderNavbar() {
+function HeaderNavbar({showCartHandler}) {
     return (
         <>
          <Navbar bg="dark" data-bs-theme="dark">
@@ -14,7 +14,7 @@ function HeaderNavbar() {
             <Nav.Link href="#features">Store</Nav.Link>
             <Nav.Link href="#pricing">About</Nav.Link>
           </Nav>
-            <HeaderCart></HeaderCart>
+            <HeaderCart showCartHandler={showCartHandler}></HeaderCart>
         </Container>
       </Navbar>
         </>

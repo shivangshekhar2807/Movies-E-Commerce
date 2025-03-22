@@ -2,9 +2,9 @@ import HeaderLogo from "./HeaderLogo";
 import HeaderNavbar from "./HeaderNavbar";
 
 
-function Header() {
+function Header({showCartHandler}) {
     return <>
-        <HeaderNavbar></HeaderNavbar>
+        <HeaderNavbar showCartHandler={showCartHandler}></HeaderNavbar>
         <HeaderLogo></HeaderLogo>
     
     </>
