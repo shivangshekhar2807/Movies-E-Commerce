@@ -1,0 +1,11 @@
+/* SingleMovie.css */
+
+.zoom-img {
+    transition: transform 0.3s ease-in-out;
+    /* Smooth transition */
+}
+
+.zoom-img:hover {
+    transform: scale(1.1);
+    /* Zoom effect */
+}
