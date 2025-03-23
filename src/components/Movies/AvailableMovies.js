@@ -62,12 +62,26 @@ function AvailableMovies({ showCartHandler}) {
 
   const [showMovies, setShowMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   
+ 
   async function FetchMovie() {
 
     ShowLoading();
+    setError(null);
+    
+    try {
+      
+  
+      
+       const  fetchedData = await fetch("https://swapi.dev/api/films");
+      
 
-    const fetchedData = await fetch("https://swapi.dev/api/films");
+      
+      
+      if (!fetchedData.ok) {
+        throw new Error("Something went wrong ....Retrying")
+      }
 
     const fetchedDatajson = await fetchedData.json();
 
@@ -84,10 +98,14 @@ function AvailableMovies({ showCartHandler}) {
     })
    
     setShowMovies(transformedMovies);
-     ShowMovies();
-
-   
-  }
+      ShowMovies();
+    }
+    
+    catch (error){
+      setError(error.message);
+    }
+    
+}
 
    function ShowLoading() {
     setIsLoading(true);
@@ -97,10 +115,15 @@ function AvailableMovies({ showCartHandler}) {
     setIsLoading(false);
   }
 
+  
+
     return (
         <>
         <h2 className="text-center fs-1 fw-bold text-dark mb-4 mt-5">Movies</h2>
-        {isLoading && <Loader></Loader>}
+ 
+        {error && <p>{error}</p>}
+
+        {!error &&isLoading && <Loader></Loader>}
 
     {!isLoading &&<Row className="m-5">
       {showMovies.map((singeitem, index) => (
@@ -111,6 +134,7 @@ function AvailableMovies({ showCartHandler}) {
           <SeeTheCart showCartHandler={showCartHandler} />
         </div>
         <Button variant="success" onClick={FetchMovie}>Fetch</Button>
+           
             </>
   );
     
