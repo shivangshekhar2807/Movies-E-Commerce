@@ -1,6 +1,8 @@
+import { useState } from "react";
 import SeeTheCart from "./SeeTheCart";
 import SingleMovie from "./SingleMovie";
 import { Row, Col } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 
 const productsArr = [
 
@@ -55,19 +57,60 @@ price: 100,
 ]
 
 
-function AvailableMovies({showCartHandler}) {
+function AvailableMovies({ showCartHandler }) {
+
+  const [showMovies, setShowMovies] = useState([]);
+  
+  async function FetchMovie() {
+
+    const fetchedData = await fetch("https://swapi.dev/api/films");
+
+    const fetchedDatajson = await fetchedData.json();
+
+    const transformedMovies = fetchedDatajson.results.map((movieData) => {
+          return (
+            {
+              id: movieData.episode_id,
+              title: movieData.title,
+              imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
+              price: 100,
+
+            }
+          )
+        })
+       setShowMovies(transformedMovies);
+
+    // fetch("https://swapi.dev/api/films").then((res) => {
+    //   return res.json();
+    // })
+    //   .then((data) => {
+    //     const transformedMovies = data.results.map((movieData) => {
+    //       return (
+    //         {
+    //           id: movieData.episode_id,
+    //           title: movieData.title,
+    //           imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
+    //           price: 100,
+
+    //         }
+    //       )
+    //     })
+    //     setShowMovies(transformedMovies);
+    // })
+  }
 
     return (
         <>
              <h2 className="text-center fs-1 fw-bold text-dark mb-4 mt-5">Movies</h2>
     <Row className="m-5">
-      {productsArr.map((singeitem, index) => (
+      {showMovies.map((singeitem, index) => (
         <SingleMovie key={index} singeitem={singeitem} />
       ))}
             </Row>
             <div className="d-flex justify-content-center mt-4 mb-4">
           <SeeTheCart showCartHandler={showCartHandler} />
-            </div>
+        </div>
+        <Button variant="success" onClick={FetchMovie}>Fetch</Button>
             </>
   );
     
