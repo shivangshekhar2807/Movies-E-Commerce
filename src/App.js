@@ -9,6 +9,7 @@ import { useState } from 'react';
 import WrapperApp from './components/Store/WrapperApp';
 import {Outlet} from 'react-router-dom';
 import Loader from './components/Movies/Loader';
+import MoviesForm from './components/Movies/MoviesForm';
 
 
 function App() {
@@ -32,6 +33,8 @@ function App() {
     {showCart && <CartItem dontShowCartHandler={dontShowCartHandler}></CartItem>}
     <Header showCartHandler={showCartHandler}></Header>
     <Outlet></Outlet>
+
+    <MoviesForm></MoviesForm>
     
     <AvailableMovies showCartHandler={showCartHandler} ></AvailableMovies>
     <FooterLogo></FooterLogo>
