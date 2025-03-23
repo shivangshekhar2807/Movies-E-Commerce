@@ -3,6 +3,7 @@ import SeeTheCart from "./SeeTheCart";
 import SingleMovie from "./SingleMovie";
 import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import Loader from "./Loader";
 
 const productsArr = [
 
@@ -57,11 +58,14 @@ price: 100,
 ]
 
 
-function AvailableMovies({ showCartHandler }) {
+function AvailableMovies({ showCartHandler}) {
 
   const [showMovies, setShowMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   
   async function FetchMovie() {
+
+    ShowLoading();
 
     const fetchedData = await fetch("https://swapi.dev/api/films");
 
@@ -77,36 +81,32 @@ function AvailableMovies({ showCartHandler }) {
 
             }
           )
-        })
-       setShowMovies(transformedMovies);
+    })
+   
+    setShowMovies(transformedMovies);
+     ShowMovies();
 
-    // fetch("https://swapi.dev/api/films").then((res) => {
-    //   return res.json();
-    // })
-    //   .then((data) => {
-    //     const transformedMovies = data.results.map((movieData) => {
-    //       return (
-    //         {
-    //           id: movieData.episode_id,
-    //           title: movieData.title,
-    //           imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
-    //           price: 100,
+   
+  }
 
-    //         }
-    //       )
-    //     })
-    //     setShowMovies(transformedMovies);
-    // })
+   function ShowLoading() {
+    setIsLoading(true);
+  }
+
+  function ShowMovies() {
+    setIsLoading(false);
   }
 
     return (
         <>
-             <h2 className="text-center fs-1 fw-bold text-dark mb-4 mt-5">Movies</h2>
-    <Row className="m-5">
+        <h2 className="text-center fs-1 fw-bold text-dark mb-4 mt-5">Movies</h2>
+        {isLoading && <Loader></Loader>}
+
+    {!isLoading &&<Row className="m-5">
       {showMovies.map((singeitem, index) => (
         <SingleMovie key={index} singeitem={singeitem} />
       ))}
-            </Row>
+            </Row>}
             <div className="d-flex justify-content-center mt-4 mb-4">
           <SeeTheCart showCartHandler={showCartHandler} />
         </div>

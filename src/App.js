@@ -8,11 +8,13 @@ import CartItem from './components/Cart/CartItem';
 import { useState } from 'react';
 import WrapperApp from './components/Store/WrapperApp';
 import {Outlet} from 'react-router-dom';
+import Loader from './components/Movies/Loader';
 
 
 function App() {
 
   const [showCart, setShowCart] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   function showCartHandler() {
     setShowCart(true)
@@ -22,12 +24,16 @@ function App() {
     setShowCart(false);
   }
 
+ 
+  
+
   return <WrapperApp>
     
     {showCart && <CartItem dontShowCartHandler={dontShowCartHandler}></CartItem>}
     <Header showCartHandler={showCartHandler}></Header>
     <Outlet></Outlet>
-    <AvailableMovies showCartHandler={showCartHandler}></AvailableMovies>
+    
+    <AvailableMovies showCartHandler={showCartHandler} ></AvailableMovies>
     <FooterLogo></FooterLogo>
     
   </WrapperApp>
