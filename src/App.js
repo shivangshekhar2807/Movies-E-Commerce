@@ -7,6 +7,7 @@ import FooterLogo from './components/Footer/FooterLogo';
 import CartItem from './components/Cart/CartItem';
 import { useState } from 'react';
 import WrapperApp from './components/Store/WrapperApp';
+import {Outlet} from 'react-router-dom';
 
 
 function App() {
@@ -22,9 +23,11 @@ function App() {
   }
 
   return <WrapperApp>
+    
     {showCart && <CartItem dontShowCartHandler={dontShowCartHandler}></CartItem>}
-     <Header showCartHandler={showCartHandler}></Header>
-    <AvailableMovies></AvailableMovies>
+    <Header showCartHandler={showCartHandler}></Header>
+    <Outlet></Outlet>
+    <AvailableMovies showCartHandler={showCartHandler}></AvailableMovies>
     <FooterLogo></FooterLogo>
     
   </WrapperApp>

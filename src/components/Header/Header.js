@@ -6,6 +6,7 @@ function Header({showCartHandler}) {
     return <>
         <HeaderNavbar showCartHandler={showCartHandler}></HeaderNavbar>
         <HeaderLogo></HeaderLogo>
+        
     
     </>
     

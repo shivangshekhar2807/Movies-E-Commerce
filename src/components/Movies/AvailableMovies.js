@@ -55,7 +55,7 @@ price: 100,
 ]
 
 
-function AvailableMovies() {
+function AvailableMovies({showCartHandler}) {
 
     return (
         <>
@@ -66,7 +66,7 @@ function AvailableMovies() {
       ))}
             </Row>
             <div className="d-flex justify-content-center mt-4 mb-4">
-          <SeeTheCart />
+          <SeeTheCart showCartHandler={showCartHandler} />
             </div>
             </>
   );
