@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SeeTheCart from "./SeeTheCart";
 import SingleMovie from "./SingleMovie";
 import { Row, Col } from 'react-bootstrap';
@@ -65,27 +65,64 @@ function AvailableMovies({ showCartHandler}) {
   const [error, setError] = useState(null);
   
  
-  async function FetchMovie() {
+//   async function FetchMovie() {
 
-    ShowLoading();
-    setError(null);
+//     ShowLoading();
+//     setError(null);
     
-    try {
+//     try {
       
   
       
-       const  fetchedData = await fetch("https://swapi.dev/api/films");
+//        const  fetchedData = await fetch("https://swapi.dev/api/films");
       
 
       
       
-      if (!fetchedData.ok) {
-        throw new Error("Something went wrong ....Retrying")
-      }
+//       if (!fetchedData.ok) {
+//         throw new Error("Something went wrong ....Retrying")
+//       }
 
-    const fetchedDatajson = await fetchedData.json();
+//     const fetchedDatajson = await fetchedData.json();
 
-    const transformedMovies = fetchedDatajson.results.map((movieData) => {
+//     const transformedMovies = fetchedDatajson.results.map((movieData) => {
+//           return (
+//             {
+//               id: movieData.episode_id,
+//               title: movieData.title,
+//               imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
+//               price: 100,
+
+//             }
+//           )
+//     })
+   
+//     setShowMovies(transformedMovies);
+//       ShowMovies();
+//     }
+    
+//     catch (error){
+//       setError(error.message);
+//     }
+    
+// }
+
+  
+  useEffect(() => {
+    
+    const fetchMovies = async () => {
+      setIsLoading(true);
+      
+      try {
+        const fetchedData = await fetch("https://swapi.dev/api/films");
+       
+        if (!fetchedData.ok) {
+          throw new Error("something went wrong ....")
+        }
+
+        const fetchedDatajson = await fetchedData.json();
+    
+        const transformedMovies = fetchedDatajson.results.map((movieData) => {
           return (
             {
               id: movieData.episode_id,
@@ -95,25 +132,27 @@ function AvailableMovies({ showCartHandler}) {
 
             }
           )
-    })
-   
-    setShowMovies(transformedMovies);
-      ShowMovies();
+        })
+        setShowMovies(transformedMovies);
+      }
+      catch (error) {
+        setError(error.message);
+      }
+     setIsLoading(false);
     }
+    fetchMovies();
     
-    catch (error){
-      setError(error.message);
-    }
-    
-}
+    },[])
+  
+  
+  
+  //  function ShowLoading() {
+  //   setIsLoading(true);
+  // }
 
-   function ShowLoading() {
-    setIsLoading(true);
-  }
-
-  function ShowMovies() {
-    setIsLoading(false);
-  }
+  // function ShowMovies() {
+  //   setIsLoading(false);
+  // }
 
   
 
@@ -123,7 +162,7 @@ function AvailableMovies({ showCartHandler}) {
  
         {error && <p>{error}</p>}
 
-        {!error &&isLoading && <Loader></Loader>}
+        {isLoading && <Loader></Loader>}
 
     {!isLoading &&<Row className="m-5">
       {showMovies.map((singeitem, index) => (
@@ -133,7 +172,7 @@ function AvailableMovies({ showCartHandler}) {
             <div className="d-flex justify-content-center mt-4 mb-4">
           <SeeTheCart showCartHandler={showCartHandler} />
         </div>
-        <Button variant="success" onClick={FetchMovie}>Fetch</Button>
+        {/* <Button variant="success" onClick={FetchMovie}>Fetch</Button> */}
            
             </>
   );
