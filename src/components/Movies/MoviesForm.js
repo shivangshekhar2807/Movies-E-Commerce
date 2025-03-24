@@ -1,14 +1,31 @@
+import { useState } from 'react';
 import './MoviesForm.css';
 
 
-function MoviesForm() {
+function MoviesForm({setAddMovies}) {
+
+    
 
 
-    function AddMoviesHandler(event) {
+    async function AddMoviesHandler(event) {
         event.preventDefault();
         const title = event.target.elements["text"].value;
         const price = event.target.elements["number"].value;
-        console.log(title, price);
+        
+        const MovieObj = {
+            title: title,
+            price:price,
+        }
+      const response= await fetch("https://movies-e-commerce-default-rtdb.firebaseio.com/movies.json", {
+            method: 'POST',
+            body: JSON.stringify(MovieObj),
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+      })
+        const data = await response.json();
+        setAddMovies(data);
+        
    }
 
 

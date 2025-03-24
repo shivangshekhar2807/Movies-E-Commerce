@@ -4,7 +4,7 @@ import { Row, Col,Form } from 'react-bootstrap';
 import './SingleMovie.css';
 import { useContext, useRef } from 'react';
 import AllContext from '../Store/Store-Context';
-function SingleMovie({ singeitem }) {
+function SingleMovie({ singeitem,setDeleteMovies }) {
   
   const ContextFunction = useContext(AllContext);
   
@@ -25,7 +25,15 @@ function SingleMovie({ singeitem }) {
         id: id,
         quantity: 1,
     }})
-   }
+  }
+  
+
+ async function HandleOnDelete(event) {
+   const deleteData = await fetch(`https://movies-e-commerce-default-rtdb.firebaseio.com/movies/${singeitem.id}.json`, {
+      method: "DELETE",
+    })
+   setDeleteMovies(deleteData);
+  }
 
    return (
     <Col sm={12} md={6} lg={4} xl={3} className="mb-4">
@@ -43,7 +51,8 @@ function SingleMovie({ singeitem }) {
           <Form onSubmit={handleOnSubmit}>
             <Button type="submit" variant="primary">
               Add to Cart
-            </Button>
+             </Button>
+               <Button variant="danger" onClick={HandleOnDelete}>Delete</Button>
           </Form>
         </Card.Body>
       </Card>

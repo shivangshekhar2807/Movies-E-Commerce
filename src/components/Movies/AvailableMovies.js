@@ -4,6 +4,7 @@ import SingleMovie from "./SingleMovie";
 import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Loader from "./Loader";
+import MoviesForm from "./MoviesForm";
 
 const productsArr = [
 
@@ -63,6 +64,8 @@ function AvailableMovies({ showCartHandler}) {
   const [showMovies, setShowMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [addMovie, setAddMovies] = useState([]);
+  const [deleteMovies, setDeleteMovies] = useState();
   
  
 //   async function FetchMovie() {
@@ -108,41 +111,41 @@ function AvailableMovies({ showCartHandler}) {
 // }
 
   
-  useEffect(() => {
+  // useEffect(() => {
     
-    const fetchMovies = async () => {
-      setIsLoading(true);
+  //   const fetchMovies = async () => {
+  //     setIsLoading(true);
       
-      try {
-        const fetchedData = await fetch("https://swapi.dev/api/films");
+  //     try {
+  //       const fetchedData = await fetch("https://swapi.dev/api/films");
        
-        if (!fetchedData.ok) {
-          throw new Error("something went wrong ....")
-        }
+  //       if (!fetchedData.ok) {
+  //         throw new Error("something went wrong ....")
+  //       }
 
-        const fetchedDatajson = await fetchedData.json();
+  //       const fetchedDatajson = await fetchedData.json();
     
-        const transformedMovies = fetchedDatajson.results.map((movieData) => {
-          return (
-            {
-              id: movieData.episode_id,
-              title: movieData.title,
-              imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
-              price: 100,
+  //       const transformedMovies = fetchedDatajson.results.map((movieData) => {
+  //         return (
+  //           {
+  //             id: movieData.episode_id,
+  //             title: movieData.title,
+  //             imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
+  //             price: 100,
 
-            }
-          )
-        })
-        setShowMovies(transformedMovies);
-      }
-      catch (error) {
-        setError(error.message);
-      }
-     setIsLoading(false);
-    }
-    fetchMovies();
+  //           }
+  //         )
+  //       })
+  //       setShowMovies(transformedMovies);
+  //     }
+  //     catch (error) {
+  //       setError(error.message);
+  //     }
+  //    setIsLoading(false);
+  //   }
+  //   fetchMovies();
     
-    },[])
+  //   },[])
   
   
   
@@ -154,11 +157,49 @@ function AvailableMovies({ showCartHandler}) {
   //   setIsLoading(false);
   // }
 
-  
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      setIsLoading(true);
+
+      try {
+
+        const databaseMovies = await fetch("https://movies-e-commerce-default-rtdb.firebaseio.com/movies.json");
+
+        if (!databaseMovies.ok) {
+          throw new Error("Something Went Wrong");
+        }
+
+        const data = await databaseMovies.json();
+
+        const tranformedMovies = [];
+
+        for (const key in data) {
+          tranformedMovies.push({
+            title: data[key].title,
+            price: data[key].price,
+            id: key,
+          })
+        }
+        setShowMovies(tranformedMovies);
+      }
+      
+      catch (error) {
+        setError(error.message);
+      }
+      setIsLoading(false);
+    }
+    fetchMovies();
+
+  },[addMovie,deleteMovies])
+
+  console.log(addMovie);
 
     return (
         <>
         <h2 className="text-center fs-1 fw-bold text-dark mb-4 mt-5">Movies</h2>
+
+        <MoviesForm setAddMovies={setAddMovies}></MoviesForm>
  
         {error && <p>{error}</p>}
 
@@ -166,7 +207,7 @@ function AvailableMovies({ showCartHandler}) {
 
     {!isLoading &&<Row className="m-5">
       {showMovies.map((singeitem, index) => (
-        <SingleMovie key={index} singeitem={singeitem} />
+        <SingleMovie key={index} singeitem={singeitem} setDeleteMovies={setDeleteMovies} />
       ))}
             </Row>}
             <div className="d-flex justify-content-center mt-4 mb-4">

@@ -34,7 +34,7 @@ function App() {
     <Header showCartHandler={showCartHandler}></Header>
     <Outlet></Outlet>
 
-    <MoviesForm></MoviesForm>
+   
     
     <AvailableMovies showCartHandler={showCartHandler} ></AvailableMovies>
     <FooterLogo></FooterLogo>
