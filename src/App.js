@@ -12,6 +12,7 @@ import Loader from './components/Movies/Loader';
 import MoviesForm from './components/Movies/MoviesForm';
 
 
+
 function App() {
 
   const [showCart, setShowCart] = useState(false);

@@ -66,6 +66,7 @@ function AvailableMovies({ showCartHandler}) {
   const [error, setError] = useState(null);
   const [addMovie, setAddMovies] = useState([]);
   const [deleteMovies, setDeleteMovies] = useState();
+  const [showForm, setShowForm] = useState(false);
   
  
 //   async function FetchMovie() {
@@ -193,13 +194,21 @@ function AvailableMovies({ showCartHandler}) {
 
   },[addMovie,deleteMovies])
 
-  console.log(addMovie);
+  function ShowFormhandler() {
+    setShowForm(true);
+  }
+
+  function dontShowFormhandler() {
+    setShowForm(false);
+  }
 
     return (
         <>
         <h2 className="text-center fs-1 fw-bold text-dark mb-4 mt-5">Movies</h2>
 
-        <MoviesForm setAddMovies={setAddMovies}></MoviesForm>
+        {showForm&&<MoviesForm setAddMovies={setAddMovies}></MoviesForm>}
+        {!showForm&&<Button variant="dark" onClick={ShowFormhandler} >Add</Button>}
+        {showForm&&<Button variant="dark" onClick={dontShowFormhandler} > Hide</Button>}
  
         {error && <p>{error}</p>}
 

@@ -10,13 +10,15 @@ import About from './components/Navigation/About';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Header from './components/Header/Header';
+import ContactUs from './components/Navigation/ContactUs';
 
 const router = createBrowserRouter([
   {
     path: '/', element: <App></App>,
     children: [
        { path: '/Home', element: <Home></Home> },
-       {path:'/About' , element: <About></About>}
+      { path: '/About', element: <About></About> },
+       {path:'/ContactUs',element: <ContactUs></ContactUs>}
     ]
   },
   
